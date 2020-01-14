@@ -30,7 +30,7 @@ add_library(
 	STATIC
     ${PROJECT_HEADERS}
     ${PROJECT_SOURCES} 
-	glfw
+	vendor/glfw
 )
 
 add_subdirectory(vendor/glfw)
