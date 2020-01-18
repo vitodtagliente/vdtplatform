@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
-project(vdtwindow)
+if(TARGET vdtplatform)
+	return()
+endif()
+project(vdtplatform)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -8,7 +11,7 @@ include_directories(
 	vendor/glfw/include
 )
 
-file(GLOB_RECURSE PROJECT_HEADERS "include/vdtwindow/*.h") 
+file(GLOB_RECURSE PROJECT_HEADERS "include/vdtplatform/*.h") 
 file(GLOB_RECURSE PROJECT_SOURCES "source/*.cpp")
 
 foreach(_source IN ITEMS ${PROJECT_HEADERS})
@@ -30,7 +33,8 @@ add_library(
 	STATIC
     ${PROJECT_HEADERS}
     ${PROJECT_SOURCES} 
-	vendor/glfw
 )
 
-add_subdirectory(vendor/glfw)
+if(NOT TARGET glfw)
+	add_subdirectory(vendor/glfw)
+endif()
