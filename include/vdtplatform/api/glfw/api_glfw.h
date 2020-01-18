@@ -4,13 +4,5 @@
 
 namespace platform
 {
-	class API;
-	class Window;
 
-	class Application
-	{
-	public:
-
-		
-	};
 }
