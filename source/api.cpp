@@ -10,6 +10,10 @@
 
 #define USE_GLFW PLATFORM_WINDOWS | PLATFORM_LINUX | PLATFORM_OSX
 
+#if USE_GLFW
+#include <vdtplatform/api/glfw/api_glfw.h>
+#endif
+
 namespace platform
 {
 	API* const API::Factory::get()
@@ -27,8 +31,8 @@ namespace platform
 #ifdef USE_GLFW
 			case API::Type::GLFW:
 			{
-				// TODO
-				return nullptr;
+				API_GLFW* const api = new API_GLFW();
+				return api;
 			}
 			break;
 #endif 
