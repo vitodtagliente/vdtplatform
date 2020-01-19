@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include <memory>
 #include <vector>
 
 namespace platform
@@ -48,7 +47,7 @@ namespace platform
 		// state
 		State m_state;
 		// window
-		std::unique_ptr<Window> m_window;
+		Window* m_window;
 		// listeners
 		std::vector<IListener*> m_listeners;
 		

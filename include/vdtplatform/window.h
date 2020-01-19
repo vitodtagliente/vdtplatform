@@ -23,6 +23,7 @@ namespace platform
 		};
 
 		Window();
+		virtual ~Window() = default;
 
 		// open the window
 		bool open(const Settings& settings);

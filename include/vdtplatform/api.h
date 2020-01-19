@@ -7,6 +7,7 @@
 namespace platform
 {
 	class Application;
+	class Window;
 
 	class API
 	{
@@ -43,6 +44,9 @@ namespace platform
 		virtual void shutdown() = 0;
 
 		inline Type getType() const { return m_type; }
+
+		virtual Application* const createApplication() const = 0;
+		virtual Window* const createWindow() const = 0;
 
 	protected:
 
