@@ -6,11 +6,6 @@ project(vdtplatform)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(
-	include
-	vendor/glfw/include
-)
-
 file(GLOB_RECURSE PROJECT_HEADERS "include/vdtplatform/*.h") 
 file(GLOB_RECURSE PROJECT_SOURCES "source/*.cpp")
 
@@ -35,6 +30,9 @@ add_library(
     ${PROJECT_SOURCES} 
 )
 
+target_include_directories(${PROJECT_NAME} PUBLIC include)
+target_link_libraries(${PROJECT_NAME} PUBLIC glfw)
+
 if(NOT TARGET glfw)
-	add_subdirectory(vendor/glfw)
+    add_subdirectory(vendor/glfw)
 endif()
