@@ -31,6 +31,7 @@ namespace platform
 
 			static std::vector<Type> s_availableTypes;
 			static API::Type s_platformDefaultType;
+			static API* s_instance;
 		};
 
 		API(const Type type)

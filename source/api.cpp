@@ -18,6 +18,10 @@ namespace platform
 {
 	API* const API::Factory::get()
 	{
+		if (s_instance != nullptr)
+		{
+			return s_instance;
+		}
 		return get(s_platformDefaultType);
 	}
 
@@ -59,4 +63,6 @@ namespace platform
 		API::Type::Null
 #endif
 		;
+
+	API* API::Factory::s_instance{};
 }
