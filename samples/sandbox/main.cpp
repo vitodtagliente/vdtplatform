@@ -9,15 +9,11 @@ int main(void)
     API* api = API::Factory::get(API::Type::GLFW);
     api->startup();
 
-    auto app = api->createApplication();
-    auto window = api->createWindow();
+    auto app = api->getApplication();
 
-    Window::Settings settings{};
-    window->open(settings);
-
-    while (window->isOpen())
+    while (app->getState() == Application::State::Running)
     {
-        window->update();
+        app->update();
     }
 
     api->shutdown();

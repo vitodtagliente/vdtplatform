@@ -11,18 +11,35 @@ namespace platform
 	
 	bool Application::initialize()
 	{
-		return false;
+		bool success = true;
+		for (auto it = m_listeners.begin(); it != m_listeners.end() && success; ++it)
+		{
+			success &= (*it)->onInitialize();
+		}
+		return success;
 	}
 	
+	Application::State Application::launch()
+	{
+		if (m_state == State::Created)
+		{
+			return m_state = (initialize()) ? State::Running : State::Error, m_state;
+		}
+		return m_state;
+	}
+
 	void Application::update()
 	{
 		if (m_state == State::Running)
 		{
-			m_window->update();
+			for (Window* const window : m_windows)
+			{
+				window->update();
+			}
 
 			for (const auto& listener : m_listeners)
 			{
-				listener->update();
+				listener->onUpdate();
 			}
 		}
 	}
@@ -31,12 +48,42 @@ namespace platform
 	{
 		if (m_state == State::Running)
 		{
-			m_window->close();
-
 			for (const auto& listener : m_listeners)
 			{
-				listener->close();
+				listener->onClose();
+			}
+
+			for (Window* const window : m_windows)
+			{
+				window->close();
 			}
 		}
+	}
+
+	bool Application::supportsMultipleWindows() const
+	{
+		return false;
+	}
+
+	Window* const Application::getWindow(const int index) const
+	{
+		if (index < m_windows.size())
+			return m_windows[index];
+		return nullptr;
+	}
+
+	Window* const Application::getMainWindow() const
+	{
+		return getWindow();
+	}
+	
+	void Application::registerListener(IListener* const listener)
+	{
+		m_listeners.insert(listener);
+	}
+	
+	void Application::unregisterListener(IListener* const listener)
+	{
+		m_listeners.erase(listener);
 	}
 }

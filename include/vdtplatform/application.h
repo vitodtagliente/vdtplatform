@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <set>
 #include <vector>
 
 namespace platform
@@ -24,32 +25,55 @@ namespace platform
 		class IListener
 		{
 		public:
-			virtual bool initialize() = 0;
-			virtual void update() = 0;
-			virtual void close() = 0;
+			virtual void onClose() = 0;
+			virtual bool onInitialize() = 0;
+			virtual void onPause() = 0;
+			virtual void onResume() = 0;
+			virtual void onUpdate() = 0;
+			virtual void onWindowClose() = 0;
+			virtual void onWindowResize(Window* const window) = 0;
 		};
 
 		Application(API * const api);
 		virtual ~Application() = default;
-
+		
+		/// Get the state of the application
+		/// @return The ApplicationState
 		State getState() const { return m_state; }
 
-		virtual bool initialize();
-		virtual void update();
-		virtual void close();
+		/// Launch the application
+		State launch();
+		/// Update the application
+		void update();
+		/// Close the application
+		void close();
 
-		const Window& getWindow() const { return *m_window; }
+		/// Check if the application supports multiple windows
+		/// @return true/false
+		virtual bool supportsMultipleWindows() const;
+
+		Window* const getWindow(const int index = 0) const;
+		Window* const getMainWindow() const;
+		const std::vector<Window*>& getWindows() const { return m_windows; }
+
+		//listeners management
+		void registerListener(IListener* const listener);
+		void unregisterListener(IListener* const listener);
 
 	protected:
+
+		/// Initialize the application
+		/// @return true if it is successful
+		virtual bool initialize();
 
 		// api 
 		API* m_api;
 		// state
 		State m_state;
-		// window
-		Window* m_window;
+		// windows
+		std::vector<Window*> m_windows;
 		// listeners
-		std::vector<IListener*> m_listeners;
+		std::set<IListener*> m_listeners;
 		
 	};
 }
