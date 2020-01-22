@@ -35,6 +35,7 @@ namespace platform
 
 		API(const Type type)
 			: m_type(type)
+			, m_application()
 		{
 
 		}
@@ -44,13 +45,16 @@ namespace platform
 		virtual void shutdown() = 0;
 
 		inline Type getType() const { return m_type; }
+		inline Application* const getApplication() const { return m_application; }
+
+	protected:
 
 		virtual Application* const createApplication() const = 0;
 		virtual Window* const createWindow() const = 0;
 
-	protected:
-
 		// api type
 		Type m_type;
+		// application
+		Application* m_application;
 	};
 }
