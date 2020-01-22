@@ -12,5 +12,9 @@ namespace platform
 
 		Application_GLFW(API* const api);
 		virtual ~Application_GLFW() override = default;
+
+	private:
+
+		virtual bool initialize() override;
 	};
 }

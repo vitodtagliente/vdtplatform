@@ -10,7 +10,7 @@ int main(void)
     api->startup();
 
     auto app = api->getApplication();
-
+    app->launch();
     while (app->getState() == Application::State::Running)
     {
         app->update();

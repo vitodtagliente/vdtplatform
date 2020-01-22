@@ -15,9 +15,12 @@ namespace platform
 
 		virtual bool startup() override;
 		virtual void shutdown() override;
+		
+		virtual Window* const createWindow() const override;
+
+	private:
 
 		virtual Application* const createApplication() const override;
-		virtual Window* const createWindow() const override;
 
 	};
 }

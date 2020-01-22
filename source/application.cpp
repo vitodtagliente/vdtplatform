@@ -8,6 +8,16 @@ namespace platform
 		, m_state(State::Created)
 	{
 	}
+
+	Application::~Application()
+	{
+		// the application is responsible for its windows
+		for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
+		{
+			delete (*it);
+		}
+		m_windows.clear();
+	}
 	
 	bool Application::initialize()
 	{

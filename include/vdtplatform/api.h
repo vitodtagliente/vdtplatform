@@ -34,13 +34,8 @@ namespace platform
 			static API* s_instance;
 		};
 
-		API(const Type type)
-			: m_type(type)
-			, m_application()
-		{
-
-		}
-		virtual ~API() = default;
+		API(const Type type);
+		virtual ~API();
 
 		virtual bool startup() = 0;
 		virtual void shutdown() = 0;
@@ -48,10 +43,13 @@ namespace platform
 		inline Type getType() const { return m_type; }
 		inline Application* const getApplication() const { return m_application; }
 
+		virtual Window* const createWindow() const = 0;
+
 	protected:
 
 		virtual Application* const createApplication() const = 0;
-		virtual Window* const createWindow() const = 0;
+
+	private:
 
 		// api type
 		Type m_type;

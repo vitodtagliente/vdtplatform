@@ -16,6 +16,18 @@
 
 namespace platform
 {
+	API::API(const Type type)
+		: m_type(type)
+		, m_application()
+	{
+
+	}
+
+	API::~API()
+	{
+		delete m_application;
+	}
+
 	API* const API::Factory::get()
 	{
 		if (s_instance != nullptr)
@@ -27,6 +39,14 @@ namespace platform
 
 	API* const API::Factory::get(const Type type)
 	{
+		if (s_instance != nullptr)
+		{
+			if (s_instance->getType() == type)
+				return s_instance;
+			return nullptr;
+		}
+
+		// create the API instance
 		if (std::find(s_availableTypes.begin(), s_availableTypes.end(), type) != s_availableTypes.end())
 		{
 			// create and cache the new requested api and cache
@@ -35,18 +55,22 @@ namespace platform
 #ifdef USE_GLFW
 			case API::Type::GLFW:
 			{
-				API_GLFW* const api = new API_GLFW();
-				return api;
+				s_instance = new API_GLFW();
 			}
 			break;
 #endif 
 			case API::Type::Null:
 			default:
-				return nullptr;
+				// TODO: null api
 				break;
 			}
 		}
-		return nullptr;
+
+		if (s_instance != nullptr)
+		{
+			s_instance->m_application = s_instance->createApplication();
+		}			 
+		return s_instance;
 	}
 
 	std::vector<API::Type> API::Factory::s_availableTypes{

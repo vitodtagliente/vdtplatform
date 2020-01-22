@@ -35,7 +35,7 @@ namespace platform
 		};
 
 		Application(API * const api);
-		virtual ~Application() = default;
+		virtual ~Application();
 		
 		/// Get the state of the application
 		/// @return The ApplicationState
