@@ -18,6 +18,7 @@ namespace platform
 		{
 			Created,
 			Closed,
+			Closing,
 			Error,
 			Running
 		};

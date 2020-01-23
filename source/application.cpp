@@ -59,8 +59,7 @@ namespace platform
 				// main window
 				if (i == 0 && m_windows[i]->isOpen() == false)
 				{
-					close();
-					return;
+					m_state = State::Closing;
 				}
 			}
 
@@ -73,7 +72,7 @@ namespace platform
 	
 	void Application::close()
 	{
-		if (m_state == State::Running)
+		if (m_state == State::Running || m_state == State::Closing)
 		{
 			for (const auto& listener : m_listeners)
 			{

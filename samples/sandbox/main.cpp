@@ -15,6 +15,7 @@ int main(void)
     {
         app->update();
     }
+    app->close();
 
     api->shutdown();
 

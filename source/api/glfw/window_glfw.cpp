@@ -62,6 +62,7 @@ namespace platform
 
 	void Window_GLFW::close_implementation()
 	{
+		glfwDestroyWindow(m_windowHandler);
 	}
 
 	void Window_GLFW::update_implementation()
@@ -71,8 +72,8 @@ namespace platform
 		// check for closing window
 		if (glfwWindowShouldClose(m_windowHandler))
 		{
-			// #todo
-			m_isOpen = false;
+			close();
+			return;
 		}
 		glfwSwapBuffers(m_windowHandler);
 	}
