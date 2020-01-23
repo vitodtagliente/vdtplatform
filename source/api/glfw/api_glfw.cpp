@@ -13,7 +13,8 @@ namespace platform
 
 	bool API_GLFW::startup()
 	{
-		return glfwInit();
+		return glfwInit() 
+			&& API::startup();
 	}
 
 	void API_GLFW::shutdown()

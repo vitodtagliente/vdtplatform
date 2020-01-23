@@ -30,6 +30,12 @@ namespace platform
 		delete m_application;
 	}
 
+	bool API::startup()
+	{
+		m_application = createApplication();
+		return true;
+	}
+
 	API* const API::Factory::get()
 	{
 		if (s_instance != nullptr)

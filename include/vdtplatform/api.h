@@ -37,7 +37,7 @@ namespace platform
 		API(const Type type);
 		virtual ~API();
 
-		virtual bool startup() = 0;
+		virtual bool startup();
 		virtual void shutdown() = 0;
 
 		inline Type getType() const { return m_type; }
