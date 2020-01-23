@@ -60,6 +60,8 @@ namespace platform
 		void registerListener(IListener* const listener);
 		void unregisterListener(IListener* const listener);
 
+		static Application* const instance();
+
 	protected:
 
 		/// Initialize the application

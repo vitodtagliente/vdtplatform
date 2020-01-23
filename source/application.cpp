@@ -1,5 +1,6 @@
 #include <vdtplatform/application.h>
 
+#include <vdtplatform/api.h>
 #include <vdtplatform/window.h>
 
 namespace platform
@@ -52,9 +53,15 @@ namespace platform
 	{
 		if (m_state == State::Running)
 		{
-			for (Window* const window : m_windows)
+			for (int i = 0; i < m_windows.size(); ++i)
 			{
-				window->update();
+				m_windows[i]->update();
+				// main window
+				if (i == 0 && m_windows[i]->isOpen() == false)
+				{
+					close();
+					return;
+				}
 			}
 
 			for (const auto& listener : m_listeners)
@@ -105,5 +112,10 @@ namespace platform
 	void Application::unregisterListener(IListener* const listener)
 	{
 		m_listeners.erase(listener);
+	}
+	
+	Application* const Application::instance()
+	{
+		return API::Factory::get()->getApplication();
 	}
 }

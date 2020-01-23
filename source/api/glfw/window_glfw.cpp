@@ -1,6 +1,7 @@
 #include <vdtplatform/api/glfw/window_glfw.h>
 
 #include <GLFW/glfw3.h>
+#include <vdtplatform/application.h>
 
 namespace platform
 {
@@ -42,17 +43,16 @@ namespace platform
 			// resize callback
 			glfwSetFramebufferSizeCallback(
 				m_windowHandler,
-				[](GLFWwindow*, int t_width, int t_height)
+				[](GLFWwindow*, int width, int height)
 				{
-					/*
-					if (Window_GLFW* const window = static_cast<Window_GLFW*>(Window::instance()))
+					Application* const app = Application::instance();
+					Window* const window = app ? app->getWindow() : nullptr;
+					
+					if (Window_GLFW* const windowGLFW = static_cast<Window_GLFW*>(window))
 					{
-						window->m_size = {
-							static_cast<uint32>(t_width),
-							static_cast<uint32>(t_height)
-						};
+						windowGLFW->m_width = static_cast<std::uint32_t>(width);
+						windowGLFW->m_height = static_cast<std::uint32_t>(height);
 					}
-					*/
 				}
 			);
 			return true;
