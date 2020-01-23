@@ -41,10 +41,8 @@ namespace platform
 		virtual void shutdown() = 0;
 
 		inline Type getType() const { return m_type; }
-		inline Application* const getApplication() const { return m_application; }
-
-		virtual Window* const createWindow() const = 0;
-
+		inline Application* const getApplication() const { return m_application; };
+		
 	protected:
 
 		virtual Application* const createApplication() const = 0;

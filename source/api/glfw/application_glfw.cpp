@@ -1,7 +1,7 @@
 #include <vdtplatform/api/glfw/application_glfw.h>
 
 #include <vdtplatform/api.h>
-#include <vdtplatform/window.h>
+#include <vdtplatform/api/glfw/window_glfw.h>
 
 namespace platform
 {
@@ -9,15 +9,9 @@ namespace platform
 		: Application(api)
 	{
 	}
-	
-	bool Application_GLFW::initialize()
+
+	Window* const Application_GLFW::createWindow() const
 	{
-		Window* const window = m_api->createWindow();
-		if (window != nullptr)
-		{
-			m_windows.push_back(window);
-			return window->open({}) && Application::initialize();
-		}
-		return false;
+		return new Window_GLFW();
 	}
 }

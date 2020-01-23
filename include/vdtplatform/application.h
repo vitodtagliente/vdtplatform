@@ -65,6 +65,7 @@ namespace platform
 		/// Initialize the application
 		/// @return true if it is successful
 		virtual bool initialize();
+		virtual Window* const createWindow() const = 0;
 
 		// api 
 		API* m_api;

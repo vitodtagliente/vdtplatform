@@ -1,4 +1,5 @@
 #include <vdtplatform/application.h>
+
 #include <vdtplatform/window.h>
 
 namespace platform
@@ -33,7 +34,16 @@ namespace platform
 	{
 		if (m_state == State::Created)
 		{
-			return m_state = (initialize()) ? State::Running : State::Error, m_state;
+			if (initialize())
+			{
+				Window* const window = createWindow();
+				if (window && window->open({}))
+				{
+					m_windows.push_back(window);
+					return m_state = State::Running, m_state;
+				}
+			}
+			m_state = State::Error;
 		}
 		return m_state;
 	}

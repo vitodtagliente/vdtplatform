@@ -2,7 +2,6 @@
 
 #include <GLFW/glfw3.h>
 #include <vdtplatform/api/glfw/application_glfw.h>
-#include <vdtplatform/api/glfw/window_glfw.h>
 
 namespace platform
 {
@@ -24,10 +23,5 @@ namespace platform
 	Application* const API_GLFW::createApplication() const
 	{
 		return new Application_GLFW((API*)this);
-	}
-
-	Window* const API_GLFW::createWindow() const
-	{
-		return new Window_GLFW();
 	}
 }

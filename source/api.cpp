@@ -14,6 +14,8 @@
 #include <vdtplatform/api/glfw/api_glfw.h>
 #endif
 
+#include <vdtplatform/application.h>
+
 namespace platform
 {
 	API::API(const Type type)
@@ -64,12 +66,7 @@ namespace platform
 				// TODO: null api
 				break;
 			}
-		}
-
-		if (s_instance != nullptr)
-		{
-			s_instance->m_application = s_instance->createApplication();
-		}			 
+		} 
 		return s_instance;
 	}
 

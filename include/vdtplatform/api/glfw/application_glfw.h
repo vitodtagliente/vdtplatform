@@ -15,6 +15,6 @@ namespace platform
 
 	private:
 
-		virtual bool initialize() override;
+		virtual Window* const createWindow() const override;
 	};
 }
