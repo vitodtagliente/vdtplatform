@@ -37,29 +37,51 @@ namespace platform
 		{
 			if (initialize())
 			{
-				Window* const window = createWindow();
-				if (window && window->open({}))
+				if (supportsWindows())
 				{
-					m_windows.push_back(window);
-					return m_state = State::Running, m_state;
+					Window* const window = createWindow();
+					if (window && window->open({}))
+					{
+						m_windows.push_back(window);
+						m_state = State::Running;
+					}
+					else
+					{
+						m_state = State::Error;
+					}
+					return m_state;
 				}
+				else
+				{
+					m_state = State::Running;
+				}
+				return m_state;
 			}
 			m_state = State::Error;
 		}
 		return m_state;
 	}
 
-	void Application::update()
+	Application::State Application::update()
 	{
 		if (m_state == State::Running)
 		{
-			for (int i = 0; i < m_windows.size(); ++i)
+			for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
 			{
-				m_windows[i]->update();
-				// main window
-				if (i == 0 && m_windows[i]->isOpen() == false)
+				if ((*it)->update() == Window::State::Closing)
 				{
-					m_state = State::Closing;
+					(*it)->close();
+
+					// close the application if it was the main window
+					if (it == m_windows.begin())
+					{
+						return m_state = State::Closing, m_state;
+					}
+					else
+					{
+						delete (*it);
+						m_windows.erase(it);
+					}
 				}
 			}
 
@@ -68,6 +90,7 @@ namespace platform
 				listener->onUpdate();
 			}
 		}
+		return m_state;
 	}
 	
 	void Application::close()
@@ -84,6 +107,11 @@ namespace platform
 				window->close();
 			}
 		}
+	}
+
+	bool Application::supportsWindows() const
+	{
+		return true;
 	}
 
 	bool Application::supportsMultipleWindows() const

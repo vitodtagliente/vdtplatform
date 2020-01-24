@@ -14,30 +14,67 @@ namespace platform
 	}
 
 	Window::Window()
-		: m_isOpen(false)
+		: m_state(State::Create)
+		, m_listeners()
 	{
 	}
 
 	bool Window::open(const Settings& settings)
 	{
-		m_isOpen = open_implementation(settings);
-		return m_isOpen;
+		if (m_state == State::Create)
+		{
+			if (openImplementation(settings))
+			{
+				for (auto listener : m_listeners)
+				{
+					listener->onOpen();
+				}
+				m_state = State::Open;
+				return true;
+			}
+		}
+		m_state = State::Error;
+		return false;
+	}
+
+	Window::State Window::update()
+	{
+		if (m_state == State::Open)
+		{
+			updateImplementation();
+		}
+		return m_state;
 	}
 
 	void Window::close()
 	{
-		if (m_isOpen)
+		if (m_state == State::Open || m_state == State::Closing)
 		{
-			close_implementation();
-			m_isOpen = false;
+			for (auto listener : m_listeners)
+			{
+				listener->onClose();
+			}
+
+			closeImplementation();
+			m_state = State::Closed;
 		}
 	}
 
-	void Window::update()
+	void Window::resize(const std::uint32_t width, const std::uint32_t height)
 	{
-		if (m_isOpen)
+		for (IListener* const listener : m_listeners)
 		{
-			update_implementation();
+			listener->onResize(width, height);
 		}
+	}
+
+	void Window::registerListener(IListener* const listener)
+	{
+		m_listeners.insert(listener);
+	}
+
+	void Window::unregisterListener(IListener* const listener)
+	{
+		m_listeners.erase(listener);
 	}
 }

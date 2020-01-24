@@ -3,6 +3,7 @@
 #pragma once
 
 #include <cstdint>
+#include <set>
 #include <string>
 
 namespace platform
@@ -22,32 +23,60 @@ namespace platform
 			bool vsync;
 		};
 
+		class IListener
+		{
+		public:
+			virtual void onClose() = 0;
+			virtual void onOpen() = 0;
+			virtual void onResize(const std::uint32_t width, const std::uint32_t height) = 0;
+			virtual void onUpdate() = 0;
+		};
+
+		enum class State
+		{
+			Create,
+			Closing,
+			Closed,
+			Error,
+			Open
+		};
+
 		Window();
 		virtual ~Window() = default;
 
-		// open the window
+		/// Open the window
+		/// @param settings   The Window settings
+		/// @return true if successful
 		bool open(const Settings& settings);
+		/// Update the window
+		State update();
+		/// Close the window
 		void close();
-		// update the window
-		void update();
 
-		inline bool isOpen() const { return m_isOpen; }
+		State getState() const { return m_state; }
 
 		virtual void setTitle(const std::string& title) = 0;
-		virtual void resize(const std::uint32_t width, const std::uint32_t height) = 0;
+		virtual void resize(const std::uint32_t width, const std::uint32_t height);
 
 		virtual std::uint32_t getWidth() const = 0;
 		virtual std::uint32_t getHeight() const = 0;
 
+		/// listeners management
+		void registerListener(IListener* const listener);
+		void unregisterListener(IListener* const listener);
+
 	protected:
 
 		// open the window 
-		virtual bool open_implementation(const Settings& settings) = 0;
-		virtual void close_implementation() = 0;
+		virtual bool openImplementation(const Settings& settings) = 0;
+		virtual void closeImplementation() = 0;
 		// update the window
-		virtual void update_implementation() = 0;
+		virtual void updateImplementation() = 0;
 
 		// window state
-		bool m_isOpen;
+		State m_state;
+		// window listeners
+		std::set<IListener*> m_listeners;
+
 	};
 }

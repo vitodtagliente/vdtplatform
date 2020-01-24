@@ -31,8 +31,6 @@ namespace platform
 			virtual void onPause() = 0;
 			virtual void onResume() = 0;
 			virtual void onUpdate() = 0;
-			virtual void onWindowClose() = 0;
-			virtual void onWindowResize(Window* const window) = 0;
 		};
 
 		Application(API * const api);
@@ -45,10 +43,13 @@ namespace platform
 		/// Launch the application
 		State launch();
 		/// Update the application
-		void update();
+		State update();
 		/// Close the application
 		void close();
 
+		/// Does the application support a window rendering?
+		/// @return true if yes
+		virtual bool supportsWindows() const;
 		/// Check if the application supports multiple windows
 		/// @return true/false
 		virtual bool supportsMultipleWindows() const;
@@ -57,7 +58,7 @@ namespace platform
 		Window* const getMainWindow() const;
 		const std::vector<Window*>& getWindows() const { return m_windows; }
 
-		//listeners management
+		/// listeners management
 		void registerListener(IListener* const listener);
 		void unregisterListener(IListener* const listener);
 

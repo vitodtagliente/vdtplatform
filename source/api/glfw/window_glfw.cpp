@@ -21,9 +21,10 @@ namespace platform
 	void Window_GLFW::resize(const std::uint32_t width, const std::uint32_t height)
 	{
 		glfwSetWindowSize(m_windowHandler, width, height);
+		Window::resize(width, height);
 	}
 
-	bool Window_GLFW::open_implementation(const Settings& settings)
+	bool Window_GLFW::openImplementation(const Settings& settings)
 	{
 		m_windowHandler = glfwCreateWindow(
 			settings.width,
@@ -60,19 +61,19 @@ namespace platform
 		return false;
 	}
 
-	void Window_GLFW::close_implementation()
+	void Window_GLFW::closeImplementation()
 	{
 		glfwDestroyWindow(m_windowHandler);
 	}
 
-	void Window_GLFW::update_implementation()
+	void Window_GLFW::updateImplementation()
 	{
 		glfwPollEvents();
 
 		// check for closing window
 		if (glfwWindowShouldClose(m_windowHandler))
 		{
-			close();
+			m_state = State::Closing;
 			return;
 		}
 		glfwSwapBuffers(m_windowHandler);

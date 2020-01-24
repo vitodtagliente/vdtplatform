@@ -25,12 +25,12 @@ namespace platform
 	private:
 
 		// open implementation
-		virtual bool open_implementation(const Settings& settings) override;
+		virtual bool openImplementation(const Settings& settings) override;
 		// close implementation
-		virtual void close_implementation() override;
+		virtual void closeImplementation() override;
 
 		// module update
-		virtual void update_implementation() override;
+		virtual void updateImplementation() override;
 
 		// GLFW window handler
 		GLFWwindow* m_windowHandler;
