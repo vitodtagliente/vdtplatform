@@ -14,6 +14,8 @@
 #include <vdtplatform/api/glfw/api_glfw.h>
 #endif
 
+#include <vdtplatform/api/null/api_null.h>
+
 #include <vdtplatform/application.h>
 
 namespace platform
@@ -69,7 +71,7 @@ namespace platform
 #endif 
 			case API::Type::Null:
 			default:
-				// TODO: null api
+				s_instance = new API_Null();
 				break;
 			}
 		} 
