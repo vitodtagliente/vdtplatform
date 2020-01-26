@@ -15,7 +15,6 @@ namespace platform
 
 	private:
 
-		virtual std::unique_ptr<Window> createWindow() const override;
 		virtual void bindEvents() override;
 	};
 }

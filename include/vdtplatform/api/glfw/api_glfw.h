@@ -16,6 +16,8 @@ namespace platform
 		virtual bool startup() override;
 		virtual void shutdown() override;
 
+		virtual std::unique_ptr<Window> createWindow() const override;
+
 	private:
 
 		virtual std::unique_ptr<Application> createApplication() const override;

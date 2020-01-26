@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "application.h"
+#include "window.h"
 
 namespace platform
 {
@@ -43,7 +44,9 @@ namespace platform
 		inline Type getType() const { return m_type; }
 		
 		Application* const getApplication() const;
-		
+
+		virtual std::unique_ptr<Window> createWindow() const = 0;
+
 	protected:
 
 		virtual std::unique_ptr<Application> createApplication() const = 0;

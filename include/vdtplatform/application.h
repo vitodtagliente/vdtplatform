@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "input_system.h"
+#include "time.h"
 #include "window.h"
 
 namespace platform
@@ -46,6 +47,8 @@ namespace platform
 		InputSystem& getInputSystem() { return m_inputSystem; }
 		const InputSystem& getInputSystem() const { return m_inputSystem; }
 
+		const Time& getTime() const { return m_time; }
+
 		/// Launch the application
 		State launch();
 		/// Update the application
@@ -68,7 +71,6 @@ namespace platform
 
 		/// Initialize the application
 		/// @return true if it is successful
-		virtual std::unique_ptr<Window> createWindow() const = 0;
 		virtual bool initialize();
 		virtual void bindEvents();
 		virtual void unbindEvents();
@@ -81,6 +83,8 @@ namespace platform
 		std::unique_ptr<Window> m_window;
 		// input system
 		InputSystem m_inputSystem;
+		// time system
+		Time m_time;
 		// listeners
 		std::set<IListener*> m_listeners;
 		

@@ -13,11 +13,6 @@ namespace platform
 	{
 	}
 
-	std::unique_ptr<Window> Application_GLFW::createWindow() const
-	{
-		return std::make_unique<Window_GLFW>();
-	}
-
 	void Application_GLFW::bindEvents()
 	{
 		if (Window_GLFW* window = static_cast<Window_GLFW*>(getWindow()))

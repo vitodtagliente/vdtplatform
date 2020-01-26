@@ -14,9 +14,5 @@ namespace platform
 		virtual ~Application_Null() override = default;
 
 		virtual bool supportsWindows() const override;
-
-	private:
-
-		virtual std::unique_ptr<Window> createWindow() const override;
 	};
 }

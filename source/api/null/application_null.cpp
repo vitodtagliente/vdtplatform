@@ -13,9 +13,4 @@ namespace platform
 	{
 		return false;
 	}
-
-	std::unique_ptr<Window> Application_Null::createWindow() const
-	{
-		return {};
-	}
 }

@@ -14,6 +14,11 @@ namespace platform
 	{
 	}
 
+	std::unique_ptr<Window> API_Null::createWindow() const
+	{
+		return {};
+	}
+
 	std::unique_ptr<Application> API_Null::createApplication() const
 	{
 		return std::make_unique<Application_Null>((API*)this);

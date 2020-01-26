@@ -4,5 +4,8 @@
 
 #include "api.h"
 #include "application.h"
+#include "fps.h"
 #include "input_system.h"
+#include "time.h"
+#include "timer.h"
 #include "window.h"

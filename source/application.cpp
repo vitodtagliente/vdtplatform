@@ -10,6 +10,7 @@ namespace platform
 		, m_state(State::Created)
 		, m_window()
 		, m_inputSystem(api)
+		, m_time()
 	{
 	}
 	
@@ -38,7 +39,7 @@ namespace platform
 		{
 			if (initialize())
 			{
-				m_window = std::move(createWindow());
+				m_window = std::move(m_api->createWindow());
 				if (m_window && m_window->open({}))
 				{
 					bindEvents();
@@ -54,6 +55,8 @@ namespace platform
 	{
 		if (m_state == State::Running)
 		{
+			m_time.tick();
+
 			if (supportsWindows())
 			{
 				if (m_window->update() == Window::State::Closing)
