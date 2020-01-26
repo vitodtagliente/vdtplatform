@@ -1,7 +1,10 @@
 #include <vdtplatform/api/glfw/application_glfw.h>
+
 #include <GLFW/glfw3.h>
+
 #include <vdtplatform/api.h>
 #include <vdtplatform/api/glfw/window_glfw.h>
+#include <vdtplatform/api/glfw/keycode_utils.h>
 
 namespace platform
 {
@@ -37,7 +40,8 @@ namespace platform
 
 					if (InputSystem* const input = InputSystem::instance())
 					{
-						//input->setKeyState(key, key_state);
+						input->setKeyState(KeyUtils_GLFW::toKeyCode(key),
+							KeyUtils_GLFW::toKeyState(action));
 					}
 				}
 			);
@@ -46,15 +50,10 @@ namespace platform
 				window_handler,
 				[](GLFWwindow*, const int button, const int action, int)
 				{
-					auto key_state = KeyState::Down;
-					if (action == GLFW_PRESS)
-						key_state = KeyState::Pressed;
-					else if (action == GLFW_RELEASE)
-						key_state = KeyState::Released;
-
 					if (InputSystem* const input = InputSystem::instance())
 					{
-						// input->setKeyState(button, key_state);
+						input->setKeyState(KeyUtils_GLFW::toKeyCode(button), 
+							KeyUtils_GLFW::toKeyState(action));
 					}
 				}
 			);
