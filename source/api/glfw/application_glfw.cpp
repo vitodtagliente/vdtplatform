@@ -10,8 +10,8 @@ namespace platform
 	{
 	}
 
-	Window* const Application_GLFW::createWindow() const
+	std::unique_ptr<Window> Application_GLFW::createWindow() const
 	{
-		return new Window_GLFW();
+		return std::make_unique<Window_GLFW>();
 	}
 }

@@ -8,17 +8,9 @@ namespace platform
 	Application::Application(API* const api)
 		: m_api(api)
 		, m_state(State::Created)
+		, m_window()
+		, m_inputSystem(api)
 	{
-	}
-
-	Application::~Application()
-	{
-		// the application is responsible for its windows
-		for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
-		{
-			delete (*it);
-		}
-		m_windows.clear();
 	}
 	
 	bool Application::initialize()
@@ -37,25 +29,11 @@ namespace platform
 		{
 			if (initialize())
 			{
-				if (supportsWindows())
+				m_window = std::move(createWindow());
+				if (m_window && m_window->open({}))
 				{
-					Window* const window = createWindow();
-					if (window && window->open({}))
-					{
-						m_windows.push_back(window);
-						m_state = State::Running;
-					}
-					else
-					{
-						m_state = State::Error;
-					}
-					return m_state;
+					return m_state = State::Running, m_state;
 				}
-				else
-				{
-					m_state = State::Running;
-				}
-				return m_state;
 			}
 			m_state = State::Error;
 		}
@@ -66,22 +44,13 @@ namespace platform
 	{
 		if (m_state == State::Running)
 		{
-			for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
+			if (supportsWindows())
 			{
-				if ((*it)->update() == Window::State::Closing)
+				if (m_window->update() == Window::State::Closing)
 				{
-					(*it)->close();
-
-					// close the application if it was the main window
-					if (it == m_windows.begin())
-					{
-						return m_state = State::Closing, m_state;
-					}
-					else
-					{
-						delete (*it);
-						m_windows.erase(it);
-					}
+					m_window->close();
+					m_state = State::Closing;
+					return m_state;
 				}
 			}
 
@@ -102,9 +71,9 @@ namespace platform
 				listener->onClose();
 			}
 
-			for (Window* const window : m_windows)
+			if (m_window)
 			{
-				window->close();
+				m_window->close();
 			}
 		}
 	}
@@ -114,21 +83,14 @@ namespace platform
 		return true;
 	}
 
-	bool Application::supportsMultipleWindows() const
+	Window* const Application::getWindow() const
 	{
-		return false;
-	}
-
-	Window* const Application::getWindow(const int index) const
-	{
-		if (index < m_windows.size())
-			return m_windows[index];
-		return nullptr;
+		return m_window.get();
 	}
 
 	Window* const Application::getMainWindow() const
 	{
-		return getWindow();
+		return m_window.get();
 	}
 	
 	void Application::registerListener(IListener* const listener)

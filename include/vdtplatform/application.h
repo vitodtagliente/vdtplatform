@@ -2,13 +2,16 @@
 
 #pragma once
 
+#include <memory>
 #include <set>
 #include <vector>
+
+#include "input_system.h"
+#include "window.h"
 
 namespace platform
 {
 	class API;
-	class Window;
 
 	class Application
 	{
@@ -34,11 +37,14 @@ namespace platform
 		};
 
 		Application(API * const api);
-		virtual ~Application();
+		virtual ~Application() = default;
 		
 		/// Get the state of the application
 		/// @return The ApplicationState
 		State getState() const { return m_state; }
+
+		InputSystem& getInputSystem() { return m_inputSystem; }
+		const InputSystem& getInputSystem() const { return m_inputSystem; }
 
 		/// Launch the application
 		State launch();
@@ -46,17 +52,11 @@ namespace platform
 		State update();
 		/// Close the application
 		void close();
-
-		/// Does the application support a window rendering?
-		/// @return true if yes
+		
 		virtual bool supportsWindows() const;
-		/// Check if the application supports multiple windows
-		/// @return true/false
-		virtual bool supportsMultipleWindows() const;
 
-		Window* const getWindow(const int index = 0) const;
+		Window* const getWindow() const;
 		Window* const getMainWindow() const;
-		const std::vector<Window*>& getWindows() const { return m_windows; }
 
 		/// listeners management
 		void registerListener(IListener* const listener);
@@ -69,14 +69,16 @@ namespace platform
 		/// Initialize the application
 		/// @return true if it is successful
 		virtual bool initialize();
-		virtual Window* const createWindow() const = 0;
+		virtual std::unique_ptr<Window> createWindow() const = 0;
 
 		// api 
 		API* m_api;
 		// state
 		State m_state;
 		// windows
-		std::vector<Window*> m_windows;
+		std::unique_ptr<Window> m_window;
+		// input system
+		InputSystem m_inputSystem;
 		// listeners
 		std::set<IListener*> m_listeners;
 		
