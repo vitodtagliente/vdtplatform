@@ -5,7 +5,6 @@
 #include <map>
 #include <set>
 #include <vector>
-#include "api.h"
 #include "keycode.h"
 
 namespace platform

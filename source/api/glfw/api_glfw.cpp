@@ -21,8 +21,8 @@ namespace platform
 	{
 	}
 
-	Application* const API_GLFW::createApplication() const
+	std::unique_ptr<Application> API_GLFW::createApplication() const
 	{
-		return new Application_GLFW((API*)this);
+		return std::make_unique<Application_GLFW>((API*)this);
 	}
 }

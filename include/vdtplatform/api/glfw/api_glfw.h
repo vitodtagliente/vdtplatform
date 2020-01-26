@@ -18,7 +18,7 @@ namespace platform
 
 	private:
 
-		virtual Application* const createApplication() const override;
+		virtual std::unique_ptr<Application> createApplication() const override;
 
 	};
 }

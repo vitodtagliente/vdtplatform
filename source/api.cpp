@@ -16,8 +16,6 @@
 
 #include <vdtplatform/api/null/api_null.h>
 
-#include <vdtplatform/application.h>
-
 namespace platform
 {
 	API::API(const Type type)
@@ -27,15 +25,15 @@ namespace platform
 
 	}
 
-	API::~API()
-	{
-		delete m_application;
-	}
-
 	bool API::startup()
 	{
-		m_application = createApplication();
+		m_application = std::move(createApplication());
 		return true;
+	}
+
+	Application* const API::getApplication() const
+	{
+		return m_application.get();
 	}
 
 	API* const API::Factory::get()

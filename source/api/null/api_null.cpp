@@ -14,8 +14,8 @@ namespace platform
 	{
 	}
 
-	Application* const API_Null::createApplication() const
+	std::unique_ptr<Application> API_Null::createApplication() const
 	{
-		return new Application_Null((API*)this);
+		return std::make_unique<Application_Null>((API*)this);
 	}
 }

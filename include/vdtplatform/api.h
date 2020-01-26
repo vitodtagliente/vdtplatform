@@ -5,11 +5,10 @@
 #include <memory>
 #include <vector>
 
+#include "application.h"
+
 namespace platform
 {
-	class Application;
-	class Window;
-
 	class API
 	{
 	public:
@@ -36,23 +35,24 @@ namespace platform
 		};
 
 		API(const Type type);
-		virtual ~API();
+		virtual ~API() = default;
 
 		virtual bool startup();
 		virtual void shutdown() = 0;
 
 		inline Type getType() const { return m_type; }
-		inline Application* const getApplication() const { return m_application; };
+		
+		Application* const getApplication() const;
 		
 	protected:
 
-		virtual Application* const createApplication() const = 0;
+		virtual std::unique_ptr<Application> createApplication() const = 0;
 
 	private:
 
 		// api type
 		Type m_type;
 		// application
-		Application* m_application;
+		std::unique_ptr<Application> m_application;
 	};
 }
