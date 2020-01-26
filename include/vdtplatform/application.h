@@ -68,8 +68,10 @@ namespace platform
 
 		/// Initialize the application
 		/// @return true if it is successful
-		virtual bool initialize();
 		virtual std::unique_ptr<Window> createWindow() const = 0;
+		virtual bool initialize();
+		virtual void bindEvents();
+		virtual void unbindEvents();
 
 		// api 
 		API* m_api;

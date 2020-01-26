@@ -22,6 +22,15 @@ namespace platform
 		}
 		return success;
 	}
+
+	void Application::bindEvents()
+	{
+	}
+
+	void Application::unbindEvents()
+	{
+
+	}
 	
 	Application::State Application::launch()
 	{
@@ -32,6 +41,7 @@ namespace platform
 				m_window = std::move(createWindow());
 				if (m_window && m_window->open({}))
 				{
+					bindEvents();
 					return m_state = State::Running, m_state;
 				}
 			}
@@ -66,6 +76,8 @@ namespace platform
 	{
 		if (m_state == State::Running || m_state == State::Closing)
 		{
+			unbindEvents();
+
 			for (const auto& listener : m_listeners)
 			{
 				listener->onClose();
