@@ -17,6 +17,7 @@ namespace platform
 	// collection of keys
 	enum class KeyCode : std::uint32_t
 	{
+		None,
 		Q,
 		W,
 		E,
