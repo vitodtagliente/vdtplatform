@@ -6,27 +6,33 @@
 
 namespace platform
 {
+	class API;
+
 	class Time
 	{
 	public:
 
-		Time();
+		friend class Application;
+
+		Time(API* const api);
 
 		// retrieve the time data
 		inline double getTime() const { return m_time; }
 		inline double getDeltaTime() const { return m_deltaTime; }
 		
-		// tick the time
-		void tick();
-
 		void reset();
 
 	private:
 
-		// high resolution clocks
-		std::chrono::high_resolution_clock::time_point m_clock1;
-		std::chrono::high_resolution_clock::time_point m_clock2;
+		// tick the time
+		void tick();
 
+		// high resolution clocks
+		std::chrono::high_resolution_clock::time_point m_startingClock;
+		std::chrono::high_resolution_clock::time_point m_clock;
+
+		// api
+		API* m_api;
 		// cache time and delta time
 		double m_time;
 		double m_deltaTime;

@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "application.h"
+#include "time.h"
 #include "window.h"
 
 namespace platform
@@ -45,11 +46,12 @@ namespace platform
 		
 		Application* const getApplication() const;
 
-		virtual std::unique_ptr<Window> createWindow() const = 0;
+		virtual std::unique_ptr<Window> createWindow() = 0;
+		virtual std::unique_ptr<Time> createTime();
 
 	protected:
 
-		virtual std::unique_ptr<Application> createApplication() const = 0;
+		virtual std::unique_ptr<Application> createApplication() = 0;
 
 	private:
 

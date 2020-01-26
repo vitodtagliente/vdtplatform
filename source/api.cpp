@@ -36,6 +36,11 @@ namespace platform
 		return m_application.get();
 	}
 
+	std::unique_ptr<Time> API::createTime()
+	{
+		return std::make_unique<Time>(this);
+	}
+
 	API* const API::Factory::get()
 	{
 		if (s_instance != nullptr)

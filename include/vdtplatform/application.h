@@ -47,7 +47,7 @@ namespace platform
 		InputSystem& getInputSystem() { return m_inputSystem; }
 		const InputSystem& getInputSystem() const { return m_inputSystem; }
 
-		const Time& getTime() const { return m_time; }
+		Time* const getTime() const;
 
 		/// Launch the application
 		State launch();
@@ -84,7 +84,7 @@ namespace platform
 		// input system
 		InputSystem m_inputSystem;
 		// time system
-		Time m_time;
+		std::unique_ptr<Time> m_time;
 		// listeners
 		std::set<IListener*> m_listeners;
 		

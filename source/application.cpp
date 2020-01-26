@@ -33,13 +33,20 @@ namespace platform
 
 	}
 	
+	Time* const Application::getTime() const
+	{
+		return m_time.get();
+	}
+
 	Application::State Application::launch()
 	{
 		if (m_state == State::Created)
 		{
 			if (initialize())
 			{
+				m_time = std::move(m_api->createTime());
 				m_window = std::move(m_api->createWindow());
+
 				if (m_window && m_window->open({}))
 				{
 					bindEvents();
@@ -55,7 +62,7 @@ namespace platform
 	{
 		if (m_state == State::Running)
 		{
-			m_time.tick();
+			m_time->tick();
 
 			if (supportsWindows())
 			{

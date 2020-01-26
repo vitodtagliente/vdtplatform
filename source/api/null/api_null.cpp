@@ -14,13 +14,13 @@ namespace platform
 	{
 	}
 
-	std::unique_ptr<Window> API_Null::createWindow() const
+	std::unique_ptr<Window> API_Null::createWindow()
 	{
 		return {};
 	}
 
-	std::unique_ptr<Application> API_Null::createApplication() const
+	std::unique_ptr<Application> API_Null::createApplication()
 	{
-		return std::make_unique<Application_Null>((API*)this);
+		return std::make_unique<Application_Null>(this);
 	}
 }

@@ -22,13 +22,13 @@ namespace platform
 	{
 	}
 
-	std::unique_ptr<Window> API_GLFW::createWindow() const
+	std::unique_ptr<Window> API_GLFW::createWindow()
 	{
 		return std::make_unique<Window_GLFW>();
 	}
 
-	std::unique_ptr<Application> API_GLFW::createApplication() const
+	std::unique_ptr<Application> API_GLFW::createApplication()
 	{
-		return std::make_unique<Application_GLFW>((API*)this);
+		return std::make_unique<Application_GLFW>(this);
 	}
 }

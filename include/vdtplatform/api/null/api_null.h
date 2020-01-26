@@ -15,11 +15,11 @@ namespace platform
 
 		virtual void shutdown() override;
 
-		virtual std::unique_ptr<Window> createWindow() const override;
+		virtual std::unique_ptr<Window> createWindow() override;
 
 	private:
 
-		virtual std::unique_ptr<Application> createApplication() const override;
+		virtual std::unique_ptr<Application> createApplication() override;
 
 	};
 }
