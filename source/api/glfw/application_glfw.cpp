@@ -27,57 +27,57 @@ namespace platform
 
 			glfwSetKeyCallback(
 				window_handler,
-				[](GLFWwindow*, const int t_key, const int, const int t_action, const int)
+				[](GLFWwindow*, const int key, const int, const int action, const int)
 				{
 					auto key_state = KeyState::Down;
-					if (t_action == GLFW_PRESS)
+					if (action == GLFW_PRESS)
 						key_state = KeyState::Pressed;
-					else if (t_action == GLFW_RELEASE)
+					else if (action == GLFW_RELEASE)
 						key_state = KeyState::Released;
 
-					// if (Input* const input = Input::instance())
-					// {
-					// 	input->setKeyState(t_key, key_state);
-					// }
+					if (InputSystem* const input = InputSystem::instance())
+					{
+						//input->setKeyState(key, key_state);
+					}
 				}
 			);
 
 			glfwSetMouseButtonCallback(
 				window_handler,
-				[](GLFWwindow*, const int t_button, const int t_action, int)
+				[](GLFWwindow*, const int button, const int action, int)
 				{
 					auto key_state = KeyState::Down;
-					if (t_action == GLFW_PRESS)
+					if (action == GLFW_PRESS)
 						key_state = KeyState::Pressed;
-					else if (t_action == GLFW_RELEASE)
+					else if (action == GLFW_RELEASE)
 						key_state = KeyState::Released;
 
-					// if (Input* const input = Input::instance())
-					// {
-					// 	input->setKeyState(t_button, key_state);
-					// }
+					if (InputSystem* const input = InputSystem::instance())
+					{
+						// input->setKeyState(button, key_state);
+					}
 				}
 			);
 
 			glfwSetCursorPosCallback(
 				window_handler,
-				[](GLFWwindow*, const double t_x, const double t_y)
+				[](GLFWwindow*, const double x, const double y)
 				{
-					// if (Input* const input = Input::instance())
-					// {
-					// 	input->setMousePosition(static_cast<float>(t_x), static_cast<float>(t_y));
-					// }
+					if (InputSystem* const input = InputSystem::instance())
+					{
+						input->setMousePosition(static_cast<float>(x), static_cast<float>(y));
+					}
 				}
 			);
 
 			glfwSetCursorEnterCallback(
 				window_handler,
-				[](GLFWwindow*, const int t_entered)
+				[](GLFWwindow*, const int isEntered)
 				{
-					// if (Input* const input = Input::instance())
-					// {
-					// 	input->setMousePositionValid(t_entered);
-					// }
+					if (InputSystem* const input = InputSystem::instance())
+					{
+						input->setMousePositionValid(static_cast<bool>(isEntered));
+					}
 				}
 			);
 		}

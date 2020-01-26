@@ -47,6 +47,8 @@ namespace platform
 		// reset the input state
 		void clear();
 
+		static InputSystem* const instance();
+
 	private:
 
 		// api

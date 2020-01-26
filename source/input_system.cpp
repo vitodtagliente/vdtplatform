@@ -1,5 +1,7 @@
 #include <vdtplatform/input_system.h>
 
+#include <vdtplatform/application.h>
+
 namespace platform
 {
 	InputSystem::InputSystem(API* const api)
@@ -84,15 +86,17 @@ namespace platform
 	void InputSystem::setMousePosition(const float x, const float y)
 	{
 		m_lastMousePosition = m_mousePosition;
-		m_mousePosition = { x, y };
-		m_deltaMousePosition = { x - m_lastMousePosition.first, y - m_lastMousePosition.second };
+		m_mousePosition = { static_cast<std::uint32_t>(x), static_cast<std::uint32_t>(y) };
+		m_deltaMousePosition = { m_mousePosition.first - m_lastMousePosition.first, 
+			m_mousePosition.second - m_lastMousePosition.second };
 	}
 	
 	void InputSystem::setMousePosition(const std::uint32_t x, const std::uint32_t y)
 	{
 		m_lastMousePosition = m_mousePosition;
 		m_mousePosition = { x, y };
-		m_deltaMousePosition = { x - m_lastMousePosition.first, y - m_lastMousePosition.second };
+		m_deltaMousePosition = { m_mousePosition.first - m_lastMousePosition.first,
+			m_mousePosition.second - m_lastMousePosition.second };
 	}
 	
 	void InputSystem::setMousePositionValid(const bool valid)
@@ -119,5 +123,14 @@ namespace platform
 	{
 		m_lastKeysState.clear();
 		m_keysState.clear();
+	}
+	
+	InputSystem* const InputSystem::instance()
+	{
+		if (Application* const application = Application::instance())
+		{
+			return &application->getInputSystem();
+		}
+		return nullptr;
 	}
 }
