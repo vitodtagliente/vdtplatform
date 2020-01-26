@@ -45,9 +45,7 @@ namespace platform
 		/// @return The ApplicationState
 		State getState() const { return m_state; }
 
-		InputSystem& getInputSystem() { return m_inputSystem; }
-		const InputSystem& getInputSystem() const { return m_inputSystem; }
-
+		InputSystem* const getInputSystem() const;
 		Time* const getTime() const;
 
 		/// Launch the application
@@ -85,7 +83,7 @@ namespace platform
 		// windows
 		std::unique_ptr<Window> m_window;
 		// input system
-		InputSystem m_inputSystem;
+		std::unique_ptr<InputSystem> m_inputSystem;
 		// time system
 		std::unique_ptr<Time> m_time;
 		// FPS 

@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "application.h"
+#include "input_system.h"
 #include "time.h"
 #include "window.h"
 
@@ -48,6 +49,7 @@ namespace platform
 
 		virtual std::unique_ptr<Window> createWindow() = 0;
 		virtual std::unique_ptr<Time> createTime();
+		virtual std::unique_ptr<InputSystem> createInputSystem();
 
 	protected:
 

@@ -129,7 +129,7 @@ namespace platform
 	{
 		if (Application* const application = Application::instance())
 		{
-			return &application->getInputSystem();
+			return application->getInputSystem();
 		}
 		return nullptr;
 	}

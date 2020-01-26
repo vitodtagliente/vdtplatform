@@ -41,6 +41,11 @@ namespace platform
 		return std::make_unique<Time>(this);
 	}
 
+	std::unique_ptr<InputSystem> API::createInputSystem()
+	{
+		return std::make_unique<InputSystem>(this);
+	}
+
 	API* const API::Factory::get()
 	{
 		if (s_instance != nullptr)

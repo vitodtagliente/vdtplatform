@@ -9,7 +9,7 @@ namespace platform
 		: m_api(api)
 		, m_state(State::Created)
 		, m_window()
-		, m_inputSystem(api)
+		, m_inputSystem()
 		, m_time()
 	{
 	}
@@ -33,6 +33,11 @@ namespace platform
 
 	}
 	
+	InputSystem* const Application::getInputSystem() const
+	{
+		return m_inputSystem.get();
+	}
+
 	Time* const Application::getTime() const
 	{
 		return m_time.get();
@@ -46,6 +51,7 @@ namespace platform
 			{
 				m_time = std::move(m_api->createTime());
 				m_window = std::move(m_api->createWindow());
+				m_inputSystem = std::move(m_api->createInputSystem());
 
 				if (m_window && m_window->open({}))
 				{
