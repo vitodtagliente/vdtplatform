@@ -20,7 +20,7 @@ int main(void)
         app->update();
 
         std::stringstream ss;
-        ss << "vdtgraphics" << " " << "1.0" << " [" << app->getFPS() << " FPS]";
+        ss << "vdtplatform" << " " << "1.0" << " [" << app->getFPS() << " FPS]";
         window->setTitle(ss.str());
     }
     app->close();
