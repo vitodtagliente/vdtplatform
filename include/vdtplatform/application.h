@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "fps.h"
-#include "input_system.h"
+#include "input.h"
 #include "time.h"
 #include "window.h"
 
@@ -45,7 +45,7 @@ namespace platform
 		/// @return The ApplicationState
 		State getState() const { return m_state; }
 
-		InputSystem* const getInputSystem() const;
+		Input* const getInput() const;
 		Time* const getTime() const;
 
 		/// Launch the application
@@ -83,7 +83,7 @@ namespace platform
 		// windows
 		std::unique_ptr<Window> m_window;
 		// input system
-		std::unique_ptr<InputSystem> m_inputSystem;
+		std::unique_ptr<Input> m_input;
 		// time system
 		std::unique_ptr<Time> m_time;
 		// FPS 

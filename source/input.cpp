@@ -1,10 +1,10 @@
-#include <vdtplatform/input_system.h>
+#include <vdtplatform/input.h>
 
 #include <vdtplatform/application.h>
 
 namespace platform
 {
-	InputSystem::InputSystem(API* const api)
+	Input::Input(API* const api)
 		: m_api(api)
 		, m_lastKeysState()
 		, m_keysState()
@@ -16,7 +16,7 @@ namespace platform
 	{
 	}
 
-	void InputSystem::update()
+	void Input::update()
 	{
 		auto temp_lastKeysState = std::move(m_lastKeysState);
 		m_lastKeysState = std::move(m_keysState);
@@ -47,22 +47,22 @@ namespace platform
 		}
 	}
 	
-	bool InputSystem::isKeyDown(const KeyCode key) const
+	bool Input::isKeyDown(const KeyCode key) const
 	{
 		return hasKeyState(key, KeyState::Down);
 	}
 	
-	bool InputSystem::isKeyPressed(const KeyCode key) const
+	bool Input::isKeyPressed(const KeyCode key) const
 	{
 		return hasKeyState(key, KeyState::Pressed);
 	}
 	
-	bool InputSystem::isKeyReleased(const KeyCode key) const
+	bool Input::isKeyReleased(const KeyCode key) const
 	{
 		return hasKeyState(key, KeyState::Released);
 	}
 
-	bool InputSystem::hasKeyState(const KeyCode key, const KeyState state) const
+	bool Input::hasKeyState(const KeyCode key, const KeyState state) const
 	{
 		const auto it = m_lastKeysState.find(key);
 		if (it != m_lastKeysState.end())
@@ -70,7 +70,7 @@ namespace platform
 		return false;
 	}
 	
-	void InputSystem::setKeyState(const KeyCode key, const KeyState state)
+	void Input::setKeyState(const KeyCode key, const KeyState state)
 	{
 		const auto it = m_keysState.find(key);
 		if (it != m_keysState.end())
@@ -83,7 +83,7 @@ namespace platform
 		}
 	}
 	
-	void InputSystem::setMousePosition(const float x, const float y)
+	void Input::setMousePosition(const float x, const float y)
 	{
 		m_lastMousePosition = m_mousePosition;
 		m_mousePosition = { static_cast<std::uint32_t>(x), static_cast<std::uint32_t>(y) };
@@ -91,7 +91,7 @@ namespace platform
 			m_mousePosition.second - m_lastMousePosition.second };
 	}
 	
-	void InputSystem::setMousePosition(const std::uint32_t x, const std::uint32_t y)
+	void Input::setMousePosition(const std::uint32_t x, const std::uint32_t y)
 	{
 		m_lastMousePosition = m_mousePosition;
 		m_mousePosition = { x, y };
@@ -99,37 +99,37 @@ namespace platform
 			m_mousePosition.second - m_lastMousePosition.second };
 	}
 	
-	void InputSystem::setMousePositionValid(const bool valid)
+	void Input::setMousePositionValid(const bool valid)
 	{
 		m_isMousePositionValid = valid;
 	}
 	
-	const std::pair<std::uint32_t, std::uint32_t>& InputSystem::getMousePosition() const
+	const std::pair<std::uint32_t, std::uint32_t>& Input::getMousePosition() const
 	{
 		return m_mousePosition;
 	}
 	
-	const std::pair<std::uint32_t, std::uint32_t>& InputSystem::getDeltaMousePosition() const
+	const std::pair<std::uint32_t, std::uint32_t>& Input::getDeltaMousePosition() const
 	{
 		return m_deltaMousePosition;
 	}
 	
-	bool InputSystem::isMousePositionValid() const
+	bool Input::isMousePositionValid() const
 	{
 		return m_isMousePositionValid;
 	}
 	
-	void InputSystem::clear()
+	void Input::clear()
 	{
 		m_lastKeysState.clear();
 		m_keysState.clear();
 	}
 	
-	InputSystem* const InputSystem::instance()
+	Input* const Input::instance()
 	{
 		if (Application* const application = Application::instance())
 		{
-			return application->getInputSystem();
+			return application->getInput();
 		}
 		return nullptr;
 	}

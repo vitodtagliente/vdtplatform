@@ -33,7 +33,7 @@ namespace platform
 					else if (action == GLFW_RELEASE)
 						key_state = KeyState::Released;
 
-					if (InputSystem* const input = InputSystem::instance())
+					if (Input* const input = Input::instance())
 					{
 						input->setKeyState(KeyUtils_GLFW::toKeyCode(key),
 							KeyUtils_GLFW::toKeyState(action));
@@ -45,7 +45,7 @@ namespace platform
 				window_handler,
 				[](GLFWwindow*, const int button, const int action, int)
 				{
-					if (InputSystem* const input = InputSystem::instance())
+					if (Input* const input = Input::instance())
 					{
 						input->setKeyState(KeyUtils_GLFW::toKeyCode(button), 
 							KeyUtils_GLFW::toKeyState(action));
@@ -57,7 +57,7 @@ namespace platform
 				window_handler,
 				[](GLFWwindow*, const double x, const double y)
 				{
-					if (InputSystem* const input = InputSystem::instance())
+					if (Input* const input = Input::instance())
 					{
 						input->setMousePosition(static_cast<float>(x), static_cast<float>(y));
 					}
@@ -68,7 +68,7 @@ namespace platform
 				window_handler,
 				[](GLFWwindow*, const int isEntered)
 				{
-					if (InputSystem* const input = InputSystem::instance())
+					if (Input* const input = Input::instance())
 					{
 						input->setMousePositionValid(static_cast<bool>(isEntered));
 					}

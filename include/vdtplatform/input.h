@@ -11,7 +11,7 @@ namespace platform
 {
 	class API; 
 
-	class InputSystem
+	class Input
 	{
 	public:
 
@@ -23,8 +23,8 @@ namespace platform
 			virtual void onKeyReleased(const KeyCode key) = 0;
 		};
 
-		InputSystem(API* const api);
-		virtual ~InputSystem() = default;
+		Input(API* const api);
+		virtual ~Input() = default;
 
 		// update the input state
 		void update();
@@ -46,7 +46,7 @@ namespace platform
 		// reset the input state
 		void clear();
 
-		static InputSystem* const instance();
+		static Input* const instance();
 
 	private:
 
