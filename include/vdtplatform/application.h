@@ -6,6 +6,7 @@
 #include <set>
 #include <vector>
 
+#include "fps.h"
 #include "input_system.h"
 #include "time.h"
 #include "window.h"
@@ -61,6 +62,8 @@ namespace platform
 		Window* const getWindow() const;
 		Window* const getMainWindow() const;
 
+		inline unsigned int getFPS() const { return m_fps.get(); }
+
 		/// listeners management
 		void registerListener(IListener* const listener);
 		void unregisterListener(IListener* const listener);
@@ -85,6 +88,8 @@ namespace platform
 		InputSystem m_inputSystem;
 		// time system
 		std::unique_ptr<Time> m_time;
+		// FPS 
+		FPS m_fps;
 		// listeners
 		std::set<IListener*> m_listeners;
 		

@@ -16,11 +16,11 @@ namespace platform
 
 	void Time::tick()
 	{
-		const auto& m_clock = std::chrono::high_resolution_clock::now();
+		m_clock = std::chrono::high_resolution_clock::now();
 		const double temp_time = static_cast<double>(
 			std::chrono::duration_cast<std::chrono::milliseconds>(
 			m_clock - m_startingClock
-			).count());
+			).count()) * 0.001;
 		
 		m_deltaTime = temp_time - m_time;
 		m_time = temp_time;

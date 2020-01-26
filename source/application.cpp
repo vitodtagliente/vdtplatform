@@ -63,6 +63,7 @@ namespace platform
 		if (m_state == State::Running)
 		{
 			m_time->tick();
+			m_fps.update(m_time->getDeltaTime());
 
 			if (supportsWindows())
 			{
