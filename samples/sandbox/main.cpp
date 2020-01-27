@@ -5,6 +5,32 @@
 using namespace std;
 using namespace platform;
 
+class FPSListener : public Application::IListener
+{
+public:
+
+    FPSListener()
+        : Application::IListener()
+        , m_app()
+        , m_window()
+    {
+        m_app = Application::instance();
+        m_window = m_app->getWindow();
+    }
+
+    virtual void onUpdate() override
+    {
+        std::stringstream ss;
+        ss << "vdtplatform" << " " << "1.0" << " [" << m_app->getFPS() << " FPS]";
+        m_window->setTitle(ss.str());
+    }
+
+private:
+
+    Application* m_app;
+    Window* m_window;
+};
+
 int main(void)
 {
     API* api = API::Factory::get(API::Type::GLFW);
@@ -13,15 +39,14 @@ int main(void)
     auto app = api->getApplication();
     app->launch();
 
+    Application::IListener* listener = new FPSListener();
+    app->registerListener(listener);
+
     Window* const window = app->getWindow();
 
     while (app->getState() == Application::State::Running)
     {
         app->update();
-
-        std::stringstream ss;
-        ss << "vdtplatform" << " " << "1.0" << " [" << app->getFPS() << " FPS]";
-        window->setTitle(ss.str());
     }
     app->close();
 

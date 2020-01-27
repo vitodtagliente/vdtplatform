@@ -31,11 +31,11 @@ namespace platform
 		class IListener
 		{
 		public:
-			virtual void onClose() = 0;
-			virtual bool onInitialize() = 0;
-			virtual void onPause() = 0;
-			virtual void onResume() = 0;
-			virtual void onUpdate() = 0;
+			virtual void onClose() {};
+			virtual bool onInitialize() { return true; };
+			virtual void onPause() {};
+			virtual void onResume() {};
+			virtual void onUpdate() {};
 		};
 
 		Application(API * const api);

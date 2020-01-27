@@ -81,6 +81,16 @@ namespace platform
 		{
 			m_keysState.insert({ key, state });
 		}
+
+		for (IListener* const listener : m_listeners)
+		{
+			switch (state)
+			{
+			case KeyState::Down: listener->onKeyDown(key); break;
+			case KeyState::Pressed: listener->onKeyPressed(key); break;
+			case KeyState::Released: listener->onKeyReleased(key); break;
+			}
+		}
 	}
 	
 	void Input::setMousePosition(const float x, const float y)
