@@ -18,9 +18,9 @@ namespace platform
 		class IListener
 		{
 		public:
-			virtual void onKeyDown(const KeyCode key) = 0;
-			virtual void onKeyPressed(const KeyCode key) = 0;
-			virtual void onKeyReleased(const KeyCode key) = 0;
+			virtual void onKeyDown(const KeyCode key) {};
+			virtual void onKeyPressed(const KeyCode key) {};
+			virtual void onKeyReleased(const KeyCode key) {};
 		};
 
 		Input(API* const api);

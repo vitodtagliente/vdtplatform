@@ -26,10 +26,10 @@ namespace platform
 		class IListener
 		{
 		public:
-			virtual void onClose() = 0;
-			virtual void onOpen() = 0;
-			virtual void onResize(const std::uint32_t width, const std::uint32_t height) = 0;
-			virtual void onUpdate() = 0;
+			virtual void onClose() {};
+			virtual void onOpen() {};
+			virtual void onResize(const std::uint32_t width, const std::uint32_t height) {};
+			virtual void onUpdate() {};
 		};
 
 		enum class State
