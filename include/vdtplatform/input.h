@@ -4,7 +4,6 @@
 
 #include <map>
 #include <set>
-#include <vector>
 #include "keycode.h"
 
 namespace platform
@@ -46,6 +45,11 @@ namespace platform
 		// reset the input state
 		void clear();
 
+
+		/// listeners management
+		void registerListener(IListener* const listener);
+		void unregisterListener(IListener* const listener);
+
 		static Input* const instance();
 
 	private:
@@ -65,6 +69,6 @@ namespace platform
 		// is mouse over window?
 		bool m_isMousePositionValid;
 		// listeners
-		std::vector<IListener*> m_listeners;
+		std::set<IListener*> m_listeners;
 	};
 }

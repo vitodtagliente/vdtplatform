@@ -135,6 +135,16 @@ namespace platform
 		m_keysState.clear();
 	}
 	
+	void Input::registerListener(IListener* const listener)
+	{
+		m_listeners.insert(listener);
+	}
+
+	void Input::unregisterListener(IListener* const listener)
+	{
+		m_listeners.erase(listener);
+	}
+
 	Input* const Input::instance()
 	{
 		if (Application* const application = Application::instance())
